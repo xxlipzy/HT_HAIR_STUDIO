@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HT Hair Studio - Premium Hair Styling in Horley</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a1a1a;
+      --secondary: #8b5a3c;
+      --accent: #d4af37;
+      --light: #f8f9fa;
+      --dark: #2c2c2c;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+    }
+    
+    .hero-overlay {
+      background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(139, 90, 60, 0.6));
+    }
+    
+    .glass-effect {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .service-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transition: left 0.5s;
+    }
+    
+    .service-card:hover::before {
+      left: 100%;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .floating-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .carousel-image {
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.05);
+    }
+    
+    .carousel-image.active {
+      opacity: 1;
+      transform: scale(1);
+      position: relative;
+    }
+    
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .parallax {
+      transform: translateZ(0);
+      will-change: transform;
+    }
+    
+    .testimonial-card {
+      background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+      transition: all 0.3s ease;
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    }
+    
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+    
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    
+    @media (max-width: 768px) {
+      .hero-text {
+        padding: 0 1rem;
+      }
+      
+      .floating-btn {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Header -->
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500">
+    <nav class="container mx-auto flex justify-between items-center py-4 px-6">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+          <i class="fas fa-cut text-white text-lg"></i>
+        </div>
+        <h1 id="navbar-title" class="text-2xl font-bold transition-colors duration-300">HT Hair Studio</h1>
+      </div>
+      
+      <!-- Desktop Menu -->
+      <ul class="hidden md:flex space-x-8">
+        <li><a href="#home" class="nav-link hover:text-amber-500 transition-colors font-medium">Home</a></li>
+        <li><a href="#services" class="nav-link hover:text-amber-500 transition-colors font-medium">Services</a></li>
+        <li><a href="#about" class="nav-link hover:text-amber-500 transition-colors font-medium">About</a></li>
+        <li><a href="#testimonials" class="nav-link hover:text-amber-500 transition-colors font-medium">Reviews</a></li>
+        <li><a href="#contact" class="nav-link hover:text-amber-500 transition-colors font-medium">Contact</a></li>
+        <li><a href="#" class="nav-link hover:text-amber-500 transition-colors font-medium">Stylist</a></li>
+      </ul>
+      
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-2xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden mobile-menu fixed top-0 right-0 h-screen w-3/4 bg-white shadow-2xl">
+      <div class="p-6">
+        <button id="close-menu" class="float-right text-2xl text-gray-600">
+          <i class="fas fa-times"></i>
+        </button>
+        <ul class="mt-16 space-y-6">
+          <li><a href="#home" class="block text-lg font-medium text-gray-800 hover:text-amber-500 transition-colors">Home</a></li>
+          <li><a href="#services" class="block text-lg font-medium text-gray-800 hover:text-amber-500 transition-colors">Services</a></li>
+          <li><a href="#about" class="block text-lg font-medium text-gray-800 hover:text-amber-500 transition-colors">About</a></li>
+          <li><a href="#testimonials" class="block text-lg font-medium text-gray-800 hover:text-amber-500 transition-colors">Reviews</a></li>
+          <li><a href="#contact" class="block text-lg font-medium text-gray-800 hover:text-amber-500 transition-colors">Contact</a></li>
+          <li><a href="#" class="block text-lg font-medium text-gray-800 hover:text-amber-500 transition-colors">Stylist</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="relative h-screen overflow-hidden">
+    <div id="carousel" class="relative w-full h-full">
+      <img src="/path/to/your/image1.jpg" alt="HT Hair Studio 1" class="carousel-image active">
+      <img src="/path/to/your/image2.jpg" alt="HT Hair Studio 2" class="carousel-image">
+      <img src="/path/to/your/image3.jpg" alt="HT Hair Studio 3" class="carousel-image">
+      <img src="/path/to/your/image4.jpg" alt="HT Hair Studio 4" class="carousel-image">
+    </div>
+    
+    <div class="hero-overlay absolute inset-0 flex items-center justify-center">
+      <div class="text-center text-white hero-text max-w-4xl mx-auto fade-in">
+        <h2 class="text-6xl md:text-7xl font-bold mb-6 leading-tight">
+          Transform Your
+          <span class="gradient-text block">Beauty</span>
+        </h2>
+        <p class="text-xl md:text-2xl mb-8 font-light">Premium Hair Styling & Beauty Services in the Heart of Horley</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="https://booksy.com/en-gb/131443_ht-hair-studio_hair-salon_963377_horley#ba_s=sh_1" target="_blank" 
+             class="bg-gradient-to-r from-amber-400 to-yellow-500 text-black px-8 py-4 rounded-full text-lg font-semibold hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <i class="fas fa-calendar-alt mr-2"></i>Book Appointment
+          </a>
+          <a href="#services" 
+             class="glass-effect text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300">
+            <i class="fas fa-chevron-down mr-2"></i>Explore Services
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+      <i class="fas fa-chevron-down text-2xl"></i>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-16 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="fade-in" style="margin-top: 0;">
+          <div class="text-4xl md:text-5xl font-bold gradient-text mb-2" data-count="42">0</div>
+          <p class="text-gray-300">Booksy Reviews</p>
+        </div>
+        <div class="fade-in">
+          <div class="text-4xl md:text-5xl font-bold gradient-text mb-2" data-count="5">0</div>
+          <p class="text-gray-300">Years Experience</p>
+        </div>
+        <div class="fade-in">
+          <div class="text-4xl md:text-5xl font-bold gradient-text mb-2" data-count="65">0</div>
+          <p class="text-gray-300">Services Offered</p>
+        </div>
+        <div class="fade-in">
+          <div class="text-4xl md:text-5xl font-bold gradient-text mb-2" data-count="100">0</div>
+          <p class="text-gray-300">Satisfaction Rate</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-5xl font-bold text-gray-800 mb-4">Our Premium Services</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Experience luxury hair care with our comprehensive range of professional services</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Haircuts -->
+        <div class="service-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-cut text-white text-2xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Precision Cuts</h3>
+          <p class="text-gray-600 mb-6">Expert cuts tailored to your face shape, lifestyle, and personal style. From classic to contemporary looks.</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <p><i class="fas fa-clock mr-2"></i>45-60 minutes</p>
+            <p><i class="fas fa-pound-sign mr-2"></i>£25</p>
+          </div>
+          <button class="text-amber-500 font-semibold hover:text-amber-600 transition-colors">Learn More <i class="fas fa-arrow-right ml-1"></i></button>
+        </div>
+        
+        <!-- Coloring -->
+        <div class="service-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-palette text-white text-2xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Hair Coloring</h3>
+          <p class="text-gray-600 mb-6">Professional color treatments including highlights, balayage, ombre, and full color transformations.</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <p><i class="fas fa-clock mr-2"></i>2-4 hours</p>
+            <p><i class="fas fa-pound-sign mr-2"></i>£45</p>
+          </div>
+          <button class="text-purple-500 font-semibold hover:text-purple-600 transition-colors">Learn More <i class="fas fa-arrow-right ml-1"></i></button>
+        </div>
+        
+        <!-- Styling -->
+        <div class="service-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-magic text-white text-2xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Hair Styling</h3>
+          <p class="text-gray-600 mb-6">Perfect styles for weddings, parties, or special occasions. Updos, blowouts, and glamorous looks.</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <p><i class="fas fa-clock mr-2"></i>30-90 minutes</p>
+            <p><i class="fas fa-pound-sign mr-2"></i>£20</p>
+          </div>
+          <button class="text-green-500 font-semibold hover:text-green-600 transition-colors">Learn More <i class="fas fa-arrow-right ml-1"></i></button>
+        </div>
+        
+        <!-- Treatments -->
+        <div class="service-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-leaf text-white text-2xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Hair Treatments</h3>
+          <p class="text-gray-600 mb-6">Deep conditioning, keratin treatments, and scalp therapies to restore and maintain hair health.</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <p><i class="fas fa-clock mr-2"></i>60-120 minutes</p>
+            <p><i class="fas fa-pound-sign mr-2"></i>£30</p>
+          </div>
+          <button class="text-blue-500 font-semibold hover:text-blue-600 transition-colors">Learn More <i class="fas fa-arrow-right ml-1"></i></button>
+        </div>
+        
+        <!-- Extensions -->
+        <div class="service-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-plus-circle text-white text-2xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Hair Extensions</h3>
+          <p class="text-gray-600 mb-6">Premium quality extensions for length and volume. Tape-in, clip-in, and permanent options available.</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <p><i class="fas fa-clock mr-2"></i>2-3 hours</p>
+            <p><i class="fas fa-pound-sign mr-2"></i>£100</p>
+          </div>
+          <button class="text-pink-500 font-semibold hover:text-pink-600 transition-colors">Learn More <i class="fas fa-arrow-right ml-1"></i></button>
+        </div>
+        
+        <!-- Bridal -->
+        <div class="service-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mb-6">
+            <i class="fas fa-crown text-white text-2xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">Bridal Package</h3>
+          <p class="text-gray-600 mb-6">Complete bridal hair services including trial, wedding day styling, and bridal party packages.</p>
+          <div class="text-sm text-gray-500 mb-4">
+            <p><i class="fas fa-clock mr-2"></i>2-4 hours</p>
+            <p><i class="fas fa-pound-sign mr-2"></i>£80</p>
+          </div>
+          <button class="text-orange-500 font-semibold hover:text-orange-600 transition-colors">Learn More <i class="fas fa-arrow-right ml-1"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-gray-100">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col lg:flex-row items-center gap-16">
+        <div class="lg:w-1/2 slide-in-left">
+          <div class="relative">
+            <img src="/path/to/your/salon-chair.jpg" alt="HT Hair Studio Interior" class="rounded-2xl shadow-2xl">
+            <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-2xl flex items-center justify-center shadow-xl">
+              <div class="text-center text-white">
+                <div class="text-2xl font-bold">5+</div>
+                <div class="text-sm">Years</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="lg:w-1/2 slide-in-right">
+          <h2 class="text-5xl font-bold text-gray-800 mb-6">About HT Hair Studio</h2>
+          <p class="text-xl text-gray-600 mb-6">Located in the vibrant heart of Horley, HT Hair Studio has been the premier destination for exceptional hair care and beauty services since 2019.</p>
+          
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start space-x-4">
+              <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center mt-1">
+                <i class="fas fa-check text-white text-sm"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-1">Expert Stylists</h4>
+                <p class="text-gray-600">Our team of certified professionals brings years of experience and creative vision to every appointment.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center mt-1">
+                <i class="fas fa-check text-white text-sm"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-1">Premium Products</h4>
+                <p class="text-gray-600">We use only the finest hair care products and tools to ensure exceptional results and hair health.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="w-8 h-8 bg-amber-400 rounded-full flex items-center justify-center mt-1">
+                <i class="fas fa-check text-white text-sm"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-gray-800 mb-1">Personalized Service</h4>
+                <p class="text-gray-600">Every client receives a customized consultation to achieve their unique style and beauty goals.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#contact" class="bg-gradient-to-r from-amber-400 to-yellow-500 text-black px-6 py-3 rounded-full font-semibold hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 text-center">
+              Contact Us
+            </a>
+            <a href="#services" class="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-full font-semibold hover:border-amber-400 hover:text-amber-600 transition-all duration-300 text-center">
+              View Services
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-5xl font-bold text-gray-800 mb-4">What Our Clients Say</h2>
+        <p class="text-xl text-gray-600">Don't just take our word for it - hear from our satisfied clients</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="testimonial-card p-8 rounded-2xl shadow-lg fade-in">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+              <span class="text-white font-bold">S</span>
+            </div>
+            <div class="ml-4">
+              <h4 class="font-semibold text-gray-800">Sarah D.</h4>
+              <p class="text-gray-500 text-sm">Apr 22, 2025 • Restyle Cut & Blow-dry by Hannah</p>
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600 italic">"Hannah was super friendly and has a lovely Salon! I was looking for a local hair salon and for someone to restyle my hair - I love it! Hannah has done such a lovely job. I'll definitely be back!"</p>
+        </div>
+        
+        <div class="testimonial-card p-8 rounded-2xl shadow-lg fade-in">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+              <span class="text-white font-bold">V</span>
+            </div>
+            <div class="ml-4">
+              <h4 class="font-semibold text-gray-800">Veronika Eva B.</h4>
+              <p class="text-gray-500 text-sm">Jul 13, 2025 • Cut & Blow-dry by Hannah</p>
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600 italic">"Hannah is a great hairdresser, she understands exactly what I need with my hair. She's very kind and professional. All the other staff members are nice and smiley too. Prices are great, and on top of that, she always gives a little extra, like a loyalty card or a scratch card for discounts. I'm very happy I found her page on Facebook 😊 Thank you again."</p>
+        </div>
+        
+        <div class="testimonial-card p-8 rounded-2xl shadow-lg fade-in">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center">
+              <span class="text-white font-bold">S</span>
+            </div>
+            <div class="ml-4">
+              <h4 class="font-semibold text-gray-800">Stephen S.</h4>
+              <p class="text-gray-500 text-sm">Jun 16, 2025 • Wet Haircut by Hannah</p>
+              <div class="flex text-yellow-400 text-sm">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600 italic">"Amazing, this place is a real gem and I'll be back - great haircut thank you :)"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amenities Section -->
+  <section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-5xl font-bold text-gray-800 mb-4">Premium Amenities</h2>
+        <p class="text-xl text-gray-600">Comfort and convenience designed around you</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-parking text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Free Parking</h3>
+          <p class="text-gray-600">Convenient on-site parking available for all clients</p>
+        </div>
+        
+        <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-credit-card text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Card Payments</h3>
+          <p class="text-gray-600">We accept all major credit and debit cards</p>
+        </div>
+        
+        <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-child text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Family Friendly</h3>
+          <p class="text-gray-600">Welcoming environment for clients of all ages</p>
+        </div>
+        
+        <div class="text-center p-8 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 fade-in">
+          <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-wheelchair-move text-white text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-800 mb-3">Accessible</h3>
+          <p class="text-gray-600">Full accessibility features for all clients</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-5xl font-bold mb-4">Get In Touch</h2>
+        <p class="text-xl text-gray-300">Ready to transform your look? Contact us today</p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <!-- Contact Information -->
+        <div class="slide-in-left">
+          <div class="space-y-8">
+            <div class="flex items-start space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+                <i class="fas fa-map-marker-alt text-white"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-semibold mb-2">Visit Our Studio</h4>
+                <p class="text-gray-300">71a Balcombe Road<br>Horley, Surrey RH6 9AB<br>United Kingdom</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+                <i class="fas fa-phone text-white"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-semibold mb-2">Call Us</h4>
+                <p class="text-gray-300">01293 241290</p>
+                <p class="text-sm text-gray-400">Tue-Fri: 9AM-6PM, Sat: 9:30AM-4:30PM</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+                <i class="fas fa-envelope text-white"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-semibold mb-2">Email Us</h4>
+                <p class="text-gray-300">hthairstudio@outlook.com</p>
+                <p class="text-sm text-gray-400">We'll reply within 24 hours</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start space-x-4">
+              <div class="w-12 h-12 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+                <i class="fas fa-clock text-white"></i>
+              </div>
+              <div>
+                <h4 class="text-xl font-semibold mb-2">Opening Hours</h4>
+                <div class="text-gray-300 space-y-1">
+                  <p>Tuesday - Friday: 9:00 AM - 6:00 PM</p>
+                  <p>Saturday: 9:30 AM - 4:30 PM</p>
+                  <p>Sunday - Monday: Closed</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Social Media -->
+          <div class="mt-12">
+            <h4 class="text-xl font-semibold mb-4">Follow Us</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                <i class="fab fa-facebook-f text-white"></i>
+              </a>
+              <a href="#" class="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                <i class="fab fa-instagram text-white"></i>
+              </a>
+              <a href="#" class="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                <i class="fab fa-twitter text-white"></i>
+              </a>
+              <a href="#" class="w-12 h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                <i class="fab fa-youtube text-white"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Contact Form -->
+        <div class="slide-in-right">
+          <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8">
+            <h3 class="text-2xl font-bold mb-6">Send us a Message</h3>
+            <form id="contact-form" class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium mb-2">First Name</label>
+                  <input type="text" id="firstName" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-400" placeholder="Your first name" required>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2">Last Name</label>
+                  <input type="text" id="lastName" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-400" placeholder="Your last name" required>
+                </div>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Email</label>
+                <input type="email" id="email" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-400" placeholder="your@email.com" required>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Phone (Optional)</label>
+                <input type="tel" id="phone" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-400" placeholder="+44 123 456 7890">
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Service Interest</label>
+                <select id="service" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-400">
+                  <option value="" class="text-gray-800">Select a service</option>
+                  <option value="haircut" class="text-gray-800">Haircut</option>
+                  <option value="coloring" class="text-gray-800">Hair Coloring</option>
+                  <option value="styling" class="text-gray-800">Hair Styling</option>
+                  <option value="treatment" class="text-gray-800">Hair Treatment</option>
+                  <option value="extensions" class="text-gray-800">Hair Extensions</option>
+                  <option value="bridal" class="text-gray-800">Bridal Package</option>
+                  <option value="consultation" class="text-gray-800">Consultation</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-sm font-medium mb-2">Message</label>
+                <textarea id="message" rows="4" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-400" placeholder="Tell us about your hair goals..." required></textarea>
+              </div>
+              
+              <button type="submit" class="w-full bg-gradient-to-r from-amber-400 to-yellow-500 text-black px-6 py-4 rounded-lg font-semibold hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 transform hover:scale-[1.02]">
+                Send Message <i class="fas fa-paper-plane ml-2"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-black text-white py-12">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <div class="flex items-center space-x-3 mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full flex items-center justify-center">
+              <i class="fas fa-cut text-white text-xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold">HT Hair Studio</h3>
+          </div>
+          <p class="text-gray-400 mb-6 max-w-md">Premier hair styling and beauty services in Horley. Transforming your look with creativity, precision, and care.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition-colors">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition-colors">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition-colors">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-500 transition-colors">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-xl font-semibold mb-6">Quick Links</h4>
+          <ul class="space-y-3">
+            <li><a href="#home" class="text-gray-400 hover:text-amber-400 transition-colors">Home</a></li>
+            <li><a href="#services" class="text-gray-400 hover:text-amber-400 transition-colors">Services</a></li>
+            <li><a href="#about" class="text-gray-400 hover:text-amber-400 transition-colors">About</a></li>
+            <li><a href="#testimonials" class="text-gray-400 hover:text-amber-400 transition-colors">Reviews</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-amber-400 transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-xl font-semibold mb-6">Services</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Hair Cuts</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Hair Coloring</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Hair Styling</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Treatments</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Bridal Services</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+        <p>© 2025 HT Hair Studio. All rights reserved. | Privacy Policy | Terms of Service</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Book Now Button -->
+  <a href="https://booksy.com/en-gb/131443_ht-hair-studio_hair-salon_963377_horley#ba_s=sh_1" target="_blank" class="floating-btn bg-gradient-to-r from-amber-400 to-yellow-500 text-black px-6 py-3 rounded-full shadow-2xl hover:from-amber-500 hover:to-yellow-600 transition-all duration-300 flex items-center space-x-2">
+    <i class="fas fa-calendar-alt"></i>
+    <span class="font-semibold">Book Now</span>
+  </a>
+
+  <!-- JavaScript -->
+  <script>
+    // Carousel functionality
+    const images = document.querySelectorAll('.carousel-image');
+    let currentIndex = 0;
+
+    function showNextImage() {
+      images[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % images.length;
+      images[currentIndex].classList.add('active');
+    }
+
+    setInterval(showNextImage, 5000);
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          // Counter animation for stats
+          if (entry.target.hasAttribute('data-count')) {
+            animateCounter(entry.target);
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, [data-count]').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Counter animation
+    function animateCounter(element) {
+      const target = parseInt(element.getAttribute('data-count'));
+      const duration = 2000;
+      const start = 0;
+      const startTime = Date.now();
+
+      function updateCounter() {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const current = Math.floor(progress * target);
+        
+        element.textContent = current + (target === 100 ? '%' : '');
+        
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        }
+      }
+      
+      updateCounter();
+    }
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    const navbarTitle = document.getElementById('navbar-title');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const heroSection = document.getElementById('home');
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY > 100;
+      
+      if (scrolled) {
+        navbar.classList.add('bg-white', 'shadow-lg');
+        navbar.classList.remove('bg-transparent');
+        navbarTitle.classList.add('text-gray-800');
+        navbarTitle.classList.remove('text-white');
+        navLinks.forEach(link => {
+          link.classList.add('text-gray-700');
+          link.classList.remove('text-white');
+        });
+      } else {
+        navbar.classList.remove('bg-white', 'shadow-lg');
+        navbar.classList.add('bg-transparent');
+        navbarTitle.classList.remove('text-gray-800');
+        navbarTitle.classList.add('text-white');
+        navLinks.forEach(link => {
+          link.classList.remove('text-gray-700');
+          link.classList.add('text-white');
+        });
+      }
+    });
+
+    // Mobile menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const closeMenu = document.getElementById('close-menu');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.add('open');
+    });
+
+    closeMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+    });
+
+    // Close mobile menu when clicking on links
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Contact form handling
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Show success message
+      const button = this.querySelector('button[type="submit"]');
+      const originalText = button.innerHTML;
+      button.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+      button.classList.add('bg-green-500');
+      
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.classList.remove('bg-green-500');
+        this.reset();
+      }, 3000);
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.parallax');
+      
+      parallaxElements.forEach(element => {
+        const speed = 0.5;
+        element.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+
+    // Add loading animation
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+  </script>
+</body>
+</html>
